@@ -1,0 +1,6 @@
+org\openmrs\module\plr\Item.class
+org\openmrs\module\plr\PlrActivator.class
+org\openmrs\module\plr\api\impl\PlrServiceImpl.class
+org\openmrs\module\plr\api\PlrService.class
+org\openmrs\module\plr\api\dao\PlrDao.class
+org\openmrs\module\plr\PlrConfig.class

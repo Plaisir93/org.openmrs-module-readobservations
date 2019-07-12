@@ -1,0 +1,4 @@
+org\openmrs\module\plr\fragment\controller\UsersFragmentController.class
+org\openmrs\module\plr\extension\html\AdminList.class
+org\openmrs\module\plr\fragment\controller\ObservationsFragmentController.class
+org\openmrs\module\plr\web\controller\PlrController.class
