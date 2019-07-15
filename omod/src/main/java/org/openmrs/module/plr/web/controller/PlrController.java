@@ -22,7 +22,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.User;
 import org.openmrs.Obs;
-import org.openmrs.Patient;
 import org.openmrs.api.UserService;
 import org.openmrs.api.ObsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +30,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import java.util.Date;
+import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * This class configured as controller using annotation and mapped with the URL of
@@ -81,25 +83,23 @@ public class PlrController {
 		return VIEW;
 	}
 	
+	// fromDate and toDate generating methods for the EncounterSearchCriteria Object
+	public Date defaultFromDate() {
+		Calendar fromDate = Calendar.getInstance();
+		fromDate.set(fromDate.DAY_OF_MONTH, 1);
+		return fromDate.getTime();
+	}
+	
+	public Date defaultToDate() {
+		//DateFormat df = new SimpleDateFormat("yyyy-MM-d", Locale.ENGLISH);
+		Calendar toDate = Calendar.getInstance();
+		return toDate.getTime();
+	}
+	
 	@ModelAttribute("observations")
 	protected List<Obs> getAllObservations(Date startDate, Date endDate) throws Exception {
-		
-		String startString = "2019-03-6";
-		String endString = "2019-03-7";
-		
-		DateFormat format1 = new SimpleDateFormat("yyyy-MM-d", Locale.ENGLISH);
-		DateFormat format2 = new SimpleDateFormat("yyyy-MM-d", Locale.ENGLISH);
-		
-		try {
-			startDate = format1.parse(startString);
-			endDate = format2.parse(endString);
-		}
-		catch (ParseException e) {
-			e.printStackTrace();
-		}
-		
-		List<Obs> observations = obsService.getObservations(null, null, null, null, null, null, null, null, null, startDate,
-		    endDate, true);
+		List<Obs> observations = obsService.getObservations(null, null, null, null, null, null, null, null, null,
+		    defaultFromDate(), defaultToDate(), true);
 		
 		// this object will be made available to the jsp page under the variable name
 		// that is defined in the @ModuleAttribute tag

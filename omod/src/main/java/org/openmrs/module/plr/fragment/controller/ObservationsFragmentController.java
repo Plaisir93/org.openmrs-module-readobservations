@@ -14,11 +14,9 @@ import org.openmrs.api.ObsService;
 import org.openmrs.Patient;
 import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.fragment.FragmentModel;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Calendar;
 import java.util.Locale;
-import java.text.ParseException;
 
 /**
  *  * Controller for a fragment that shows obs  
@@ -26,24 +24,21 @@ import java.text.ParseException;
 
 public class ObservationsFragmentController {
 	
+	//fromDate and toDate generating methods for the EncounterSearchCriteria Object
+	public Date defaultFromDate() {
+		Calendar fromDate = Calendar.getInstance();
+		fromDate.set(fromDate.DAY_OF_MONTH, 1);
+		return fromDate.getTime();
+	}
+	
+	public Date defaultToDate() {
+		//DateFormat df = new SimpleDateFormat("yyyy-MM-d", Locale.ENGLISH);
+		Calendar toDate = Calendar.getInstance();
+		return toDate.getTime();
+	}
+	
 	public void controller(FragmentModel model, @SpringBean("obsService") ObsService service) {
-		
-		String startString = "2019-03-6";
-		String endString = "2019-03-7";
-		
-		DateFormat format1 = new SimpleDateFormat("yyyy-MM-d", Locale.ENGLISH);
-		DateFormat format2 = new SimpleDateFormat("yyyy-MM-d", Locale.ENGLISH);
-		
-		Date startDate = new Date();
-		Date endDate = new Date();
-		try {
-			startDate = format1.parse(startString);
-			endDate = format2.parse(endString);
-		}
-		catch (ParseException e) {
-			e.printStackTrace();
-		}
-		model.addAttribute("observations",
-		    service.getObservations(null, null, null, null, null, null, null, null, null, startDate, endDate, true));
+		model.addAttribute("observations", service.getObservations(null, null, null, null, null, null, null, null, null,
+		    defaultFromDate(), defaultToDate(), true));
 	}
 }

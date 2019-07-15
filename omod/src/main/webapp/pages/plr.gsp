@@ -3,6 +3,6 @@
 Hello Solutions S.A
 
 <br />
-This is the list of observations from 2019-03-6 to 2019-03-7
+This is the list of observations for the current month (First Day of Month to Today)
 
 ${ ui.includeFragment("plr", "observations") }
